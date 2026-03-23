@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1200">
+    <title>C-SKIN | Zuby</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; text-decoration: none; }
+
+        :root {
+            --primary-olive: #939c6c;
+            --dark-green: #1a3311;
+            --header-beige: #D6D6B2;
+            --bg-light: #ffffff;
+            --text-gray: #7a7a7a;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: #333;
+            line-height: 1.6;
+            min-width: 1200px;
+            animation: plynulyNastup 2s ease-in-out;
+        }
+
+        header {
+            background-color: var(--header-beige);
+            padding: 25px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .hamburger {
+            font-size: 40px;
+            cursor: pointer;
+            color: var(--dark-green);
+            transition: var(--transition);
+            line-height: 1;
+            user-select: none;
+        }
+
+        .hamburger:hover {
+            transform: scale(1.1);
+            color: white;
+        }
+
+        .logo-img {
+            width: 100px;
+            transition: var(--transition);
+        }
+
+        .logo-img:hover {
+            transform: rotate(-3deg) scale(1.05);
+        }
+
+        .search-container {
+            flex-grow: 1;
+            max-width: 450px;
+            margin: 0 40px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 12px 25px;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .cart-trigger {
+            cursor: pointer;
+            position: relative;
+            padding: 5px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-trigger img {
+            width: 40px;
+            height: auto;
+            transition: var(--transition);
+        }
+
+        .cart-trigger:hover img {
+            transform: scale(1.1);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -2px;
+            right: -5px;
+            background: #e74c3c;
+            color: white;
+            font-size: 11px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .sidenav, .cart-sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 3000;
+            top: 0;
+            transition: 0.5s;
+            overflow-x: hidden;
+        }
+
+        .sidenav {
+            left: 0;
+            background-color: var(--primary-olive);
+            padding-top: 60px;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cart-sidebar {
+            right: 0;
+            background-color: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidenav a {
+            padding: 15px 32px;
+            font-size: 22px;
+            color: var(--dark-green);
+            display: block;
+            transition: 0.3s;
+            font-family: serif;
+            font-weight: bold;
+        }
+
+        .sidenav a:hover {
+            color: white;
+            padding-left: 45px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            font-size: 40px;
+            cursor: pointer;
+            color: var(--dark-green);
+        }
+
+        .sidenav .close-btn { right: 25px; }
+
+        .cart-header {
+            padding: 30px;
+            background: var(--header-beige);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-body {
+            padding: 40px;
+            flex-grow: 1;
+            text-align: center;
+            color: var(--text-gray);
+        }
+
+        .checkout-btn {
+            background: var(--dark-green);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .checkout-btn:hover { background: var(--primary-olive); }
+
+        nav {
+            background-color: rgba(147, 156, 108, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 0;
+            text-align: center;
+        }
+
+        .sale-title {
+             color: #1a3311;
+            font-family: serif;
+            font-size: 26px;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+        }
+
+        .product-section {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px 25px;
+        }
+
+        .product-card {
+            text-align: center;
+            position: relative;
+            transition: var(--transition);
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .product-image-container {
+            height: 220px;
+            background: #fcfcfc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .product-card img {
+            max-width: 75%;
+            max-height: 75%;
+            transition: var(--transition);
+        }
+
+        .product-card:hover { transform: translateY(-10px); }
+
+        .brand-name {
+            color: var(--text-gray);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .product-title {
+            font-weight: bold;
+            font-size: 15px;
+            margin: 5px 0;
+            color: #333;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .new-price {
+            color: #000;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        footer {
+            background-color: var(--primary-olive);
+            padding: 50px 20px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            margin-top: 100px;
+        }
+
+        @keyframes plynulyNastup { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+
+<body>
+
+    <div id="mySidenav" class="sidenav">
+        <span class="close-btn" onclick="closeNav()">&times;</span>
+        <a href="index.html">Domov</a>
+        <a href="Akcia.html">Akcie</a>
+        <a href="Parfemy.html">Parfémy</a>
+        <a href="Licenie.html">Líčenie</a>
+        <a href="Vlasy.html">Vlasy</a>
+        <a href="Telo.html">Telo</a>
+        <a href="Zuby.html">Zuby</a>
+    </div>
+
+    <div id="cartSidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2 style="font-family: serif; color: var(--dark-green);">Váš košík</h2>
+            <span class="close-btn" onclick="toggleCart()">&times;</span>
+        </div>
+        <div class="cart-body">
+            <img src="kosik.png" alt="Košík" style="width: 100px; height: auto; margin-bottom: 20px; opacity: 0.8;">
+            <p>Váš nákupný košík je momentálne prázdny.</p>
+        </div>
+        <a href="#" class="checkout-btn">POKRAČOVAŤ K PLATBE</a>
+    </div>
+
+    <header>
+        <div class="top-bar">
+            <div class="header-left">
+                <div class="hamburger" onclick="openNav()">&#9776;</div>
+                <a href="index.html">
+                    <img class="logo-img" src="Laštíková_zadanie_č.3_Logo-removebg-preview.png" alt="Logo">
+                </a>
+            </div>
+
+            <div class="search-container">
+                <input type="text" placeholder="Hľadať produkty pre biely úsmev...">
+            </div>
+
+            <div class="cart-trigger" onclick="toggleCart()">
+                <img src="kosik.png" alt="Košík">
+                <span class="cart-badge">0</span>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <h1 class="sale-title">Dentálna hygiena</h1>
+    </nav>
+
+    <section class="product-section">
+        <div class="product-grid">
+
+            <div class="product-card">
+                <div class="product-image-container"><img src="z1.jpg" alt="Zuby"></div>
+                <div class="brand-name">Oral-B</div>
+                <div class="product-title">iO Series 9 Black Onyx</div>
+                <div class="price-box"><span class="new-price">299,00 €</span></div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image-container"><img src="z2.jpg" alt="Zuby"></div>
+                <div class="brand-name">Curaprox</div>
+                <div class="product-title">Be You Toothpaste Candy Lover</div>
+                <div class="price-box"><span class="new-price">12,50 €</span></div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image-container"><img src="z3.jpg" alt="Zuby"></div>
+                <div class="brand-name">Philips Sonicare</div>
+                <div class="product-title">ProtectiveClean 4500</div>
+                <div class="price-box"><span class="new-price">95,00 €</span></div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image-container"><img src="z4.jpg" alt="Zuby"></div>
+                <div class="brand-name">Marvis</div>
+                <div class="product-title">Whitening Mint Toothpaste</div>
+                <div class="price-box"><span class="new-price">9,90 €</span></div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image-container"><img src="z5.jpg" alt="Zuby"></div>
+                <div class="brand-name">Crest</div>
+                <div class="product-title">3D White Professional Strips</div>
+                <div class="price-box"><span class="new-price">58,00 €</span></div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image-container"><img src="z6.jpg" alt="Zuby"></div>
+                <div class="brand-name">Waterpik</div>
+                <div class="product-title">Ultra Professional Flosser</div>
+                <div class="price-box"><span class="new-price">89,00 €</span></div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image-container"><img src="z7.jpg" alt="Zuby"></div>
+                <div class="brand-name">Opalescence</div>
+                <div class="product-title">Whitening Toothpaste Original</div>
+                <div class="price-box"><span class="new-price">11,00 €</span></div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image-container"><img src="z8.jpg" alt="Zuby"></div>
+                <div class="brand-name">Swissdent</div>
+                <div class="product-title">Extreme Whitening Mouthwash</div>
+                <div class="price-box"><span class="new-price">15,40 €</span></div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 C-SKIN PREMIER | Pre váš najkrajší úsmev | C-SKIN@gmail.com
+    </footer>
+
+    <script>
+        function openNav() { document.getElementById("mySidenav").style.width = "300px"; }
+        function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
+
+        function toggleCart() {
+            var cart = document.getElementById("cartSidebar");
+            cart.style.width = (cart.style.width === "400px") ? "0" : "400px";
+        }
+    </script>
+
+</body>
+</html>

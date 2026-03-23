@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1200">
+    <title>C-SKIN | Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+
+        :root {
+            --primary-olive: #939c6c;
+            --dark-green: #1a3311;
+            --header-beige: #D6D6B2;
+            --bg-light: #ffffff;
+            --text-gray: #7a7a7a;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: #333;
+            line-height: 1.6;
+            min-width: 1200px;
+            animation: plynulyNastup 2s ease-in-out;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: var(--header-beige);
+            padding: 25px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .hamburger {
+            font-size: 35px;
+            cursor: pointer;
+            color: var(--dark-green);
+            transition: var(--transition);
+            line-height: 1;
+        }
+
+        .hamburger:hover {
+            transform: scale(1.1);
+            color: white;
+        }
+
+        .logo-img {
+            width: 100px;
+            height: auto;
+            transition: var(--transition);
+        }
+
+        .logo-img:hover {
+            transform: rotate(-3deg) scale(1.05);
+        }
+
+        .search-container {
+            flex-grow: 1;
+            max-width: 500px;
+            margin: 0 40px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 12px 25px;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .cart-trigger {
+            cursor: pointer;
+            position: relative;
+            padding: 5px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-trigger img {
+            width: 40px;
+            height: auto;
+            transition: var(--transition);
+        }
+
+        .cart-trigger:hover img {
+            transform: scale(1.1);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -2px;
+            right: -5px;
+            background: #e74c3c;
+            color: white;
+            font-size: 11px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .sidenav,
+        .cart-sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 3000;
+            top: 0;
+            transition: 0.5s;
+            overflow-x: hidden;
+        }
+
+        .sidenav {
+            left: 0;
+            background-color: var(--primary-olive);
+            padding-top: 60px;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cart-sidebar {
+            right: 0;
+            background-color: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidenav a {
+            padding: 15px 32px;
+            font-size: 22px;
+            color: var(--dark-green);
+            display: block;
+            transition: 0.3s;
+            font-family: serif;
+            font-weight: bold;
+        }
+
+        .sidenav a:hover {
+            color: white;
+            padding-left: 45px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            font-size: 40px;
+            cursor: pointer;
+            color: var(--dark-green);
+        }
+
+        .sidenav .close-btn {
+            right: 25px;
+        }
+
+        .cart-header {
+            padding: 30px;
+            background: var(--header-beige);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-body {
+            padding: 40px;
+            flex-grow: 1;
+            text-align: center;
+            color: var(--text-gray);
+        }
+
+        .checkout-btn {
+            background: var(--dark-green);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: var(--primary-olive);
+        }
+
+        nav {
+            background-color: rgba(147, 156, 108, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 5px 0;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-button {
+            background: transparent;
+            border: none;
+            padding: 15px 20px;
+            color: #1a3311;
+            font-weight: bold;
+            font-family: serif;
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-button:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .product-section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .product-card {
+            text-align: center;
+            transition: var(--transition);
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-image-container {
+            height: 220px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fcfcfc;
+        }
+
+        .product-card img {
+            max-width: 85%;
+            max-height: 85%;
+            transition: var(--transition);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .product-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .brand-name {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 5px;
+        }
+
+        .product-title {
+            font-weight: bold;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .price {
+            font-size: 19px;
+            font-weight: bold;
+            color: #000;
+            margin-top: 10px;
+        }
+
+        .promo-banner {
+            background-color: var(--primary-olive);
+            padding: 30px 0; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px; 
+            cursor: pointer;
+            overflow: hidden;
+            border: none;
+        }
+
+        .akcia-text {
+            color: var(--dark-green);
+            font-size: 80px; /
+            font-family: serif;
+            font-weight: bold;
+            line-height: 1;
+            margin: 0;
+            transition: var(--transition);
+        }
+
+        .banner-logo-img {
+            height: 80px; 
+            opacity: 1;
+            transition: var(--transition);
+        }
+
+        .promo-banner:hover .akcia-text {
+            letter-spacing: 10px;
+            color: #fff;
+        }
+
+        .promo-banner:hover .banner-logo-img {
+            transform: scale(1.1);
+        }
+
+        .random {
+            height: 50px;
+            background-color: var(--header-beige);
+            display: block;
+            width: 100%;
+        }
+
+        footer {
+            background-color: var(--primary-olive);
+            padding: 50px 20px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            margin-top: 100px;
+        }
+
+        @keyframes plynulyNastup {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="mySidenav" class="sidenav">
+        <span class="close-btn" onclick="closeNav()">&times;</span>
+        <a href="index.html">Domov</a>
+        <a href="Akcia.html">Akcie</a>
+        <a href="Parfemy.html">Parfémy</a>
+        <a href="Licenie.html">Líčenie</a>
+        <a href="Vlasy.html">Vlasy</a>
+        <a href="Telo.html">Telo</a>
+        <a href="Zuby.html">Zuby</a>
+    </div>
+
+    <div id="cartSidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2 style="font-family: serif; color: var(--dark-green);">Váš košík</h2>
+            <span class="close-btn" onclick="toggleCart()">&times;</span>
+        </div>
+        <div class="cart-body">
+            <img src="kosik.png" alt="Košík" style="width: 100px; height: auto; margin-bottom: 20px; opacity: 0.8;">
+            <p>Váš nákupný košík je momentálne prázdny.</p>
+        </div>
+        <a href="#" class="checkout-btn">POKRAČOVAŤ K PLATBE</a>
+    </div>
+
+    <header>
+        <div class="top-bar">
+            <div class="header-left">
+                <div class="hamburger" onclick="openNav()">&#9776;</div>
+                <img class="logo-img" src="Laštíková_zadanie_č.3_Logo-removebg-preview.png" alt="Logo">
+            </div>
+
+            <div class="search-container">
+                <input type="text" placeholder="Hľadať obľúbený produkt...">
+            </div>
+
+            <div class="cart-trigger" onclick="toggleCart()">
+                <img src="kosik.png" alt="Košík">
+                <span class="cart-badge">0</span>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-links">
+            <a href="Akcia.html"><button class="nav-button">Akcie</button></a>
+            <a href="Parfemy.html"><button class="nav-button">Parfémy</button></a>
+            <a href="Licenie.html"><button class="nav-button">Líčenie</button></a>
+            <a href="Vlasy.html"><button class="nav-button">Vlasy</button></a>
+            <a href="Telo.html"><button class="nav-button">Telo</button></a>
+            <a href="Zuby.html"><button class="nav-button">Zuby</button></a>
+        </div>
+    </nav>
+
+    <section class="product-section">
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image-container"><img src="t5.jpg" alt="Telo"></div>
+                <div class="brand-name">Bioderma</div>
+                <div class="product-title">Atoderm Intensive Baume</div>
+                <div class="price-box"><span class="new-price">23,40 €</span></div>
+            </div>
+            <div class="product-card">
+                <div class="product-image-container"><img src="a2.jpg" alt="Produkt"></div>
+                <div class="brand-name">The Ordinary</div>
+                <div class="product-title">AHA 30% + BHA 2% Peeling</div>
+                <div class="price-box"><span class="new-price">10,80 €</span></div>
+            </div>
+            <div class="product-card">
+                <div class="product-image-container"><img src="l1.jpg" alt="Estée Lauder"></div>
+                <div class="brand-name">Estée Lauder</div>
+                <div class="product-title">Double Wear Stay-in-Place</div>
+                <div class="price-box"><span class="new-price">48,00 €</span></div>
+            </div>
+            <div class="product-card">
+                <div class="product-image-container"><img src="a1.jpg" alt="Produkt"></div>
+                <div class="brand-name">The Ordinary</div>
+                <div class="product-title">Squalane Cleanser</div>
+                <div class="price-box"><span class="new-price">8,20 €</span></div>
+            </div>
+        </div>
+    </section>
+    
+    <a href="Akcia.html" style="display: block; text-decoration: none;">
+        <div class="random"></div> 
+        <div class="promo-banner">
+            <h1 class="akcia-text">AKCIA</h1>
+            <img class="banner-logo-img" src="Laštíková_zadanie_č.3_Logo-removebg-preview.png" alt="Logo">
+            <h1 class="akcia-text">AKCIA</h1>
+            <img class="banner-logo-img" src="Laštíková_zadanie_č.3_Logo-removebg-preview.png" alt="Logo">
+            <h1 class="akcia-text">AKCIA</h1>
+        </div>
+        <div class="random"></div> 
+    </a>
+
+    <section class="product-section">
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image-container"><img src="p6.jpg" alt="Tom Ford Lost Cherry"></div>
+                <div class="brand-name">Tom Ford</div>
+                <div class="product-title">Lost Cherry Eau de Parfum</div>
+                <div class="price-box"><span class="new-price">290,00 €</span></div>
+            </div>
+            <div class="product-card">
+                <div class="product-image-container"><img src="z4.jpg" alt="Zuby"></div>
+                <div class="brand-name">Marvis</div>
+                <div class="product-title">Whitening Mint Toothpaste</div>
+                <div class="price-box"><span class="new-price">9,90 €</span></div>
+            </div>
+            <div class="product-card">
+                <div class="product-image-container"><img src="v4.jpg" alt="Vlasy"></div>
+                <div class="brand-name">Moroccanoil</div>
+                <div class="product-title">Treatment Original Oil</div>
+                <div class="price-box"><span class="new-price">39,00 €</span></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 C-SKIN PREMIER | Všetky práva vyhradené | C-SKIN@gmail.com
+    </footer>
+
+    <script>
+        function openNav() { document.getElementById("mySidenav").style.width = "300px"; }
+        function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
+
+        function toggleCart() {
+            var cart = document.getElementById("cartSidebar");
+            cart.style.width = (cart.style.width === "400px") ? "0" : "400px";
+        }
+    </script>
+
+</body>
+</html>
