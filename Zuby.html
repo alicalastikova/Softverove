@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="sk">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1200">
-    <title>C-SKIN | Zuby</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>C-SKIN | Zuby – dentálna hygiena</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; text-decoration: none; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
 
         :root {
             --primary-olive: #939c6c;
@@ -15,15 +19,24 @@
             --bg-light: #ffffff;
             --text-gray: #7a7a7a;
             --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --max-width-default: 1400px;
+            --gap-default: 40px 25px;
         }
 
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             background-color: var(--bg-light);
-            color: #333;
-            line-height: 1.6;
-            min-width: 1200px;
-            animation: plynulyNastup 2s ease-in-out;
+            overflow-x: hidden;
+            width: 100%;
+            animation: plynulyNastup 1.6s ease-out;
+        }
+
+        .top-bar, 
+        .product-section {
+            width: 94%;
+            max-width: var(--max-width-default);
+            margin-left: auto;
+            margin-right: auto;
         }
 
         header {
@@ -36,16 +49,15 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            position: relative;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
         .header-left {
             display: flex;
             align-items: center;
             gap: 30px;
+            flex-shrink: 0;
         }
 
         .hamburger {
@@ -58,13 +70,14 @@
         }
 
         .hamburger:hover {
-            transform: scale(1.1);
             color: white;
+            transform: scale(1.08);
         }
 
         .logo-img {
             width: 100px;
             transition: var(--transition);
+            display: block;
         }
 
         .logo-img:hover {
@@ -72,9 +85,9 @@
         }
 
         .search-container {
-            flex-grow: 1;
-            max-width: 450px;
-            margin: 0 40px;
+            flex: 1;
+            min-width: 220px;
+            max-width: 480px;
         }
 
         .search-container input {
@@ -83,7 +96,14 @@
             border: 1px solid #ddd;
             border-radius: 50px;
             outline: none;
-            transition: var(--transition);
+            font-size: 1rem;
+            transition: 0.2s;
+            background: white;
+        }
+
+        .search-container input:focus {
+            border-color: var(--primary-olive);
+            box-shadow: 0 0 0 2px rgba(147, 156, 108, 0.2);
         }
 
         .cart-trigger {
@@ -93,6 +113,7 @@
             transition: var(--transition);
             display: flex;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .cart-trigger img {
@@ -121,13 +142,14 @@
             font-weight: bold;
         }
 
-        .sidenav, .cart-sidebar {
+        .sidenav,
+        .cart-sidebar {
             height: 100%;
             width: 0;
             position: fixed;
             z-index: 3000;
             top: 0;
-            transition: 0.5s;
+            transition: 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             overflow-x: hidden;
         }
 
@@ -135,13 +157,13 @@
             left: 0;
             background-color: var(--primary-olive);
             padding-top: 60px;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 5px 0 25px rgba(0, 0, 0, 0.2);
         }
 
         .cart-sidebar {
             right: 0;
             background-color: white;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.12);
             display: flex;
             flex-direction: column;
         }
@@ -151,14 +173,15 @@
             font-size: 22px;
             color: var(--dark-green);
             display: block;
-            transition: 0.3s;
-            font-family: serif;
+            font-family: 'Times New Roman', serif;
             font-weight: bold;
+            transition: 0.2s;
         }
 
         .sidenav a:hover {
             color: white;
             padding-left: 45px;
+            background: rgba(0, 0, 0, 0.05);
         }
 
         .close-btn {
@@ -167,9 +190,16 @@
             font-size: 40px;
             cursor: pointer;
             color: var(--dark-green);
+            transition: 0.2s;
         }
 
-        .sidenav .close-btn { right: 25px; }
+        .sidenav .close-btn {
+            right: 25px;
+        }
+
+        .cart-header .close-btn {
+            position: static;
+        }
 
         .cart-header {
             padding: 30px;
@@ -179,241 +209,673 @@
             align-items: center;
         }
 
-        .cart-body {
-            padding: 40px;
+        .cart-body-scroll {
             flex-grow: 1;
-            text-align: center;
-            color: var(--text-gray);
+            overflow-y: auto;
+            padding: 20px;
+            max-height: 60vh;
         }
 
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        .cart-item-img {
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+            background: #f5f5f0;
+            border-radius: 8px;
+            padding: 5px;
+        }
+        .cart-item-info {
+            flex: 1;
+            font-size: 14px;
+        }
+        .cart-item-title {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .cart-item-price {
+            color: var(--dark-green);
+            font-weight: 600;
+        }
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .cart-item-quantity button {
+            background: #f0f0e0;
+            border: none;
+            width: 26px;
+            height: 26px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .cart-item-quantity button:hover {
+            background: var(--primary-olive);
+            color: white;
+        }
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: #b33;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 8px;
+            text-decoration: underline;
+        }
+        .cart-total {
+            padding: 20px;
+            border-top: 2px solid var(--header-beige);
+            font-weight: bold;
+            font-size: 18px;
+            text-align: right;
+            background: white;
+        }
         .checkout-btn {
             background: var(--dark-green);
             color: white;
-            padding: 20px;
+            padding: 18px;
             text-align: center;
             font-weight: bold;
             transition: 0.3s;
+            display: block;
+            border: none;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .checkout-btn:hover {
+            background: var(--primary-olive);
+        }
+        .empty-cart-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-gray);
         }
 
-        .checkout-btn:hover { background: var(--primary-olive); }
-
         nav {
-            background-color: rgba(147, 156, 108, 0.95);
-            backdrop-filter: blur(10px);
+            background-color: rgba(147, 156, 108, 0.96);
+            padding: 14px 0;
+            text-align: center;
             position: sticky;
             top: 0;
             z-index: 1000;
-            padding: 12px 0;
-            text-align: center;
+            backdrop-filter: blur(2px);
         }
 
         .sale-title {
-             color: #1a3311;
-            font-family: serif;
-            font-size: 26px;
+            color: #1a3311;
+            font-family: 'Times New Roman', serif;
+            font-size: 28px;
             letter-spacing: 8px;
             text-transform: uppercase;
+            font-weight: 500;
         }
 
         .product-section {
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 0 20px;
+            margin: 60px auto;
+            padding: 0 16px;
         }
 
         .product-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 40px 25px;
+            gap: var(--gap-default);
         }
 
         .product-card {
             text-align: center;
-            position: relative;
             transition: var(--transition);
             padding-bottom: 20px;
             border-bottom: 1px solid #f0f0f0;
-        }
-
-        .product-image-container {
-            height: 220px;
-            background: #fcfcfc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            border-radius: 4px;
+            background: white;
+            border-radius: 12px;
             overflow: hidden;
         }
 
-        .product-card img {
-            max-width: 75%;
-            max-height: 75%;
-            transition: var(--transition);
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.08);
+            border-bottom-color: var(--primary-olive);
         }
 
-        .product-card:hover { transform: translateY(-10px); }
+        .product-image-container {
+            height: 230px;
+            background: #fafaf7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            border-radius: 8px;
+        }
+
+        .product-card img {
+            max-width: 80%;
+            max-height: 75%;
+            transition: var(--transition);
+            object-fit: contain;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.02);
+        }
 
         .brand-name {
             color: var(--text-gray);
-            font-size: 10px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 5px;
+            font-weight: 500;
         }
 
         .product-title {
             font-weight: bold;
             font-size: 15px;
-            margin: 5px 0;
-            color: #333;
-            height: 40px;
+            margin: 8px 0 6px;
+            padding: 0 8px;
+            height: 44px;
             overflow: hidden;
+            color: #1f2e1a;
         }
 
         .new-price {
-            color: #000;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 19px;
+            color: var(--dark-green);
+            letter-spacing: -0.3px;
+            margin: 8px 0;
+        }
+
+        .product-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 10px;
+            padding: 0 12px;
+        }
+        .btn-detail, .btn-cart {
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+        .btn-detail {
+            background: #e9e9dd;
+            color: #2c3e1f;
+        }
+        .btn-detail:hover {
+            background: #d0cfb5;
+            transform: scale(0.97);
+        }
+        .btn-cart {
+            background: var(--dark-green);
+            color: white;
+        }
+        .btn-cart:hover {
+            background: #2f5320;
+            transform: scale(0.97);
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 4000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-container {
+            background: white;
+            max-width: 550px;
+            width: 90%;
+            border-radius: 32px;
+            padding: 30px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.3);
+            transform: scale(0.95);
+            transition: transform 0.2s;
+        }
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            font-size: 32px;
+            cursor: pointer;
+            color: #888;
+        }
+        .modal-close:hover {
+            color: black;
+        }
+        .modal-img {
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+            margin-bottom: 18px;
+        }
+        .modal-brand {
+            color: var(--text-gray);
+            letter-spacing: 2px;
+            font-size: 12px;
+        }
+        .modal-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .modal-price {
+            font-size: 26px;
+            color: var(--dark-green);
+            font-weight: bold;
+            margin: 12px 0;
+        }
+        .modal-desc {
+            color: #444;
+            line-height: 1.5;
+            margin-top: 12px;
+            font-size: 15px;
         }
 
         footer {
             background-color: var(--primary-olive);
-            padding: 50px 20px;
+            padding: 55px 20px;
             text-align: center;
             color: white;
-            font-weight: bold;
             margin-top: 100px;
+            font-size: 15px;
+            letter-spacing: 0.5px;
         }
 
-        @keyframes plynulyNastup { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes plynulyNastup {
+            from { opacity: 0; transform: translateY(12px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        @media screen and (min-width: 1400px) {
+            :root {
+                --max-width-default: 1440px;
+                --gap-default: 48px 32px;
+            }
+            .top-bar, .product-section { width: 92%; }
+            .sale-title { font-size: 32px; letter-spacing: 10px; }
+            .product-title { font-size: 16px; height: 48px; }
+            .brand-name { font-size: 12px; }
+            .new-price { font-size: 20px; }
+            .product-image-container { height: 250px; }
+        }
+
+        @media screen and (min-width: 1700px) {
+            :root {
+                --max-width-default: 1600px;
+                --gap-default: 58px 40px;
+            }
+            .top-bar, .product-section { width: 88%; }
+            .product-grid { gap: 50px 40px; }
+            .product-title { font-size: 17px; font-weight: 600; }
+            .sale-title { font-size: 36px; letter-spacing: 12px; }
+            .brand-name { font-size: 13px; letter-spacing: 2.5px; }
+            .new-price { font-size: 22px; }
+            .product-image-container { height: 270px; }
+            .logo-img { width: 115px; }
+            .search-container input { padding: 14px 28px; font-size: 1.05rem; }
+            footer { padding: 65px 20px; font-size: 16px; }
+        }
+
+        @media screen and (min-width: 1920px) {
+            :root {
+                --max-width-default: 1720px;
+                --gap-default: 65px 45px;
+            }
+            .top-bar, .product-section { width: 86%; }
+            .product-card { border-radius: 20px; }
+            .product-title { font-size: 18px; height: 52px; }
+        }
+
+        @media screen and (min-width: 1200px) and (max-width: 1399px) {
+            .top-bar, .product-section { max-width: 1200px; width: 95%; }
+            .product-grid { gap: 35px 22px; }
+        }
+
+        @media screen and (max-width: 1199px) {
+            .product-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+            .top-bar { flex-wrap: wrap; justify-content: center; }
+            .header-left { flex: 1; }
+            .search-container { order: 3; width: 100%; max-width: 100%; margin-top: 12px; }
+        }
     </style>
 </head>
-
 <body>
 
-    <div id="mySidenav" class="sidenav">
-        <span class="close-btn" onclick="closeNav()">&times;</span>
-        <a href="index.html">Domov</a>
-        <a href="Akcia.html">Akcie</a>
-        <a href="Parfemy.html">Parfémy</a>
-        <a href="Licenie.html">Líčenie</a>
-        <a href="Vlasy.html">Vlasy</a>
-        <a href="Telo.html">Telo</a>
-        <a href="Zuby.html">Zuby</a>
+<div id="mySidenav" class="sidenav">
+    <span class="close-btn" onclick="closeNav()">&times;</span>
+    <a href="index.html">Domov</a>
+    <a href="Akcia.html">Akcie</a>
+    <a href="Parfemy.html">Parfémy</a>
+    <a href="Licenie.html">Líčenie</a>
+    <a href="Vlasy.html">Vlasy</a>
+    <a href="Telo.html">Telo</a>
+    <a href="Zuby.html">Zuby</a>
+</div>
+
+<div id="cartSidebar" class="cart-sidebar">
+    <div class="cart-header">
+        <h2 style="font-family: 'Times New Roman', serif; color: var(--dark-green);">Váš košík</h2>
+        <span class="close-btn" onclick="toggleCart()">&times;</span>
     </div>
-
-    <div id="cartSidebar" class="cart-sidebar">
-        <div class="cart-header">
-            <h2 style="font-family: serif; color: var(--dark-green);">Váš košík</h2>
-            <span class="close-btn" onclick="toggleCart()">&times;</span>
-        </div>
-        <div class="cart-body">
-            <img src="kosik.png" alt="Košík" style="width: 100px; height: auto; margin-bottom: 20px; opacity: 0.8;">
-            <p>Váš nákupný košík je momentálne prázdny.</p>
-        </div>
-        <a href="#" class="checkout-btn">POKRAČOVAŤ K PLATBE</a>
+    <div id="cartDynamicContent" class="cart-body-scroll">
+        <div class="empty-cart-message">Váš nákupný košík je momentálne prázdny.</div>
     </div>
+    <div id="cartFooter" style="background: white;"></div>
+</div>
 
-    <header>
-        <div class="top-bar">
-            <div class="header-left">
-                <div class="hamburger" onclick="openNav()">&#9776;</div>
-                <a href="index.html">
-                    <img class="logo-img" src="Laštíková_zadanie_č.3_Logo-removebg-preview.png" alt="Logo">
-                </a>
-            </div>
-
-            <div class="search-container">
-                <input type="text" placeholder="Hľadať produkty pre biely úsmev...">
-            </div>
-
-            <div class="cart-trigger" onclick="toggleCart()">
-                <img src="kosik.png" alt="Košík">
-                <span class="cart-badge">0</span>
-            </div>
+<header>
+    <div class="top-bar">
+        <div class="header-left">
+            <div class="hamburger" onclick="openNav()">&#9776;</div>
+            <a href="index.html"><img class="logo-img" src="Laštíková_zadanie_č.3_Logo-removebg-preview.png" alt="C-SKIN Logo"></a>
         </div>
-    </header>
-
-    <nav>
-        <h1 class="sale-title">Dentálna hygiena</h1>
-    </nav>
-
-    <section class="product-section">
-        <div class="product-grid">
-
-            <div class="product-card">
-                <div class="product-image-container"><img src="z1.jpg" alt="Zuby"></div>
-                <div class="brand-name">Oral-B</div>
-                <div class="product-title">iO Series 9 Black Onyx</div>
-                <div class="price-box"><span class="new-price">299,00 €</span></div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-container"><img src="z2.jpg" alt="Zuby"></div>
-                <div class="brand-name">Curaprox</div>
-                <div class="product-title">Be You Toothpaste Candy Lover</div>
-                <div class="price-box"><span class="new-price">12,50 €</span></div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-container"><img src="z3.jpg" alt="Zuby"></div>
-                <div class="brand-name">Philips Sonicare</div>
-                <div class="product-title">ProtectiveClean 4500</div>
-                <div class="price-box"><span class="new-price">95,00 €</span></div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-container"><img src="z4.jpg" alt="Zuby"></div>
-                <div class="brand-name">Marvis</div>
-                <div class="product-title">Whitening Mint Toothpaste</div>
-                <div class="price-box"><span class="new-price">9,90 €</span></div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-container"><img src="z5.jpg" alt="Zuby"></div>
-                <div class="brand-name">Crest</div>
-                <div class="product-title">3D White Professional Strips</div>
-                <div class="price-box"><span class="new-price">58,00 €</span></div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-container"><img src="z6.jpg" alt="Zuby"></div>
-                <div class="brand-name">Waterpik</div>
-                <div class="product-title">Ultra Professional Flosser</div>
-                <div class="price-box"><span class="new-price">89,00 €</span></div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-container"><img src="z7.jpg" alt="Zuby"></div>
-                <div class="brand-name">Opalescence</div>
-                <div class="product-title">Whitening Toothpaste Original</div>
-                <div class="price-box"><span class="new-price">11,00 €</span></div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-container"><img src="z8.jpg" alt="Zuby"></div>
-                <div class="brand-name">Swissdent</div>
-                <div class="product-title">Extreme Whitening Mouthwash</div>
-                <div class="price-box"><span class="new-price">15,40 €</span></div>
-            </div>
-
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Hľadať produkty ...">
         </div>
-    </section>
+        <div class="cart-trigger" onclick="toggleCart()">
+            <img src="kosik.png" alt="Košík">
+            <span id="cartBadge" class="cart-badge">0</span>
+        </div>
+    </div>
+</header>
 
-    <footer>
-        &copy; 2026 C-SKIN PREMIER | Pre váš najkrajší úsmev | C-SKIN@gmail.com
-    </footer>
+<nav>
+    <h1 class="sale-title">Dentálna hygiena</h1>
+</nav>
 
-    <script>
-        function openNav() { document.getElementById("mySidenav").style.width = "300px"; }
-        function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
+<section class="product-section">
+    <div id="productGridContainer" class="product-grid">
+    </div>
+</section>
 
-        function toggleCart() {
-            var cart = document.getElementById("cartSidebar");
-            cart.style.width = (cart.style.width === "400px") ? "0" : "400px";
+<footer>
+    &copy; 2026 C-SKIN PREMIER | Pre váš najkrajší úsmev | C-SKIN@gmail.com
+</footer>
+<div id="detailModal" class="modal-overlay">
+    <div class="modal-container">
+        <span class="modal-close" id="closeModalBtn">&times;</span>
+        <img id="modalImage" class="modal-img" src="" alt="produkt">
+        <div class="modal-brand" id="modalBrand"></div>
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-price" id="modalPrice"></div>
+        <div class="modal-desc" id="modalDesc"></div>
+    </div>
+</div>
+
+<script>
+    const productsData = [
+        { id: 1, brand: "Oral-B", name: "iO Series 9 Black Onyx", price: 299.00, image: "z1.jpg", description: "Najmodernejšia elektrická zubná kefka s AI technológiou, 3D sledovaním tlaku a 7 režimami. Dodáva sa s nabíjacím puzdrom a 3 hlavicami. Perfektný lesk a zdravie ďasien." },
+        { id: 2, brand: "Curaprox", name: "Be You Toothpaste Candy Lover", price: 12.50, image: "z2.jpg", description: "Veselá zubná pasta s príchuťou cukrovej vaty. Obsahuje fluorid, jemne čistí a motivuje deti i dospelých k pravidelnej hygiene. Bez SLS." },
+        { id: 3, brand: "Philips Sonicare", name: "ProtectiveClean 4500", price: 95.00, image: "z3.jpg", description: "Sonická kefka s technológiou odstraňovania plaku až 7x účinnejšie. Senzor tlaku, 2 režimy (čistenie, jemné) a výdrž batérie 2 týždne." },
+        { id: 4, brand: "Marvis", name: "Whitening Mint Toothpaste", price: 9.90, image: "z4.jpg", description: "Talianska luxusná pasta s bieliacim účinkom a intenzívnou mätovou chuťou. Odstraňuje povrchové škvrny a dodáva dlhotrvajúcu sviežosť." },
+        { id: 5, brand: "Crest", name: "3D White Professional Strips", price: 58.00, image: "z5.jpg", description: "Profesionálne bieliace pásiky na domáce použitie. Výsledok ako u zubára za 1 hodinu. Odstraňuje roky škvŕn, viditeľné zosvetlenie už po 3 dňoch." },
+        { id: 6, brand: "Waterpik", name: "Ultra Professional Flosser", price: 89.00, image: "z6.jpg", description: "Ústna sprcha s 10 nastaviteľnými úrovňami tlaku, zásobník na 650 ml. Odstraňuje 99,9% plaku a masíruje ďasná. Ideálne pre strojčeky a implantáty." },
+        { id: 7, brand: "Opalescence", name: "Whitening Toothpaste Original", price: 11.00, image: "z7.jpg", description: "Profesionálna bieliaca pasta s nízkou abrazivitou. Obsahuje fluorid a zosvetľuje zuby až o 2 odtiene. Bezpečná pre sklovinu." },
+        { id: 8, brand: "Swissdent", name: "Extreme Whitening Mouthwash", price: 15.40, image: "z8.jpg", description: "Švajčiarska ústna voda na extrémne bielenie. Obsahuje aktívny kyslík a polyfosfáty, ktoré rozpúšťajú pigmenty. Vhodná na každodenné použitie." }
+    ];
+
+    let cartItems = [];
+
+    function saveCart() {
+        localStorage.setItem("cskin_cart_zuby", JSON.stringify(cartItems));
+    }
+    function loadCart() {
+        const saved = localStorage.getItem("cskin_cart_zuby");
+        if (saved) {
+            try { cartItems = JSON.parse(saved); } catch(e) { cartItems = []; }
+        } else { cartItems = []; }
+    }
+
+    function getProductById(id) {
+        return productsData.find(p => p.id === id);
+    }
+
+    function updateCartBadge() {
+        const totalCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+        const badge = document.getElementById("cartBadge");
+        if (badge) badge.innerText = totalCount;
+    }
+
+    function addToCart(productId) {
+        const existing = cartItems.find(item => item.id === productId);
+        if (existing) {
+            existing.quantity += 1;
+        } else {
+            cartItems.push({ id: productId, quantity: 1 });
         }
-    </script>
+        saveCart();
+        updateCartBadge();
+        renderCartSidebar();
+        const btn = document.querySelector(`.product-card[data-id='${productId}'] .btn-cart`);
+        if (btn) btn.style.transform = "scale(0.95)";
+        setTimeout(() => { if(btn) btn.style.transform = ""; }, 150);
+    }
 
+    function changeQuantity(productId, delta) {
+        const idx = cartItems.findIndex(item => item.id === productId);
+        if (idx !== -1) {
+            const newQty = cartItems[idx].quantity + delta;
+            if (newQty <= 0) {
+                cartItems.splice(idx, 1);
+            } else {
+                cartItems[idx].quantity = newQty;
+            }
+            saveCart();
+            updateCartBadge();
+            renderCartSidebar();
+        }
+    }
+
+    function removeItemCompletely(productId) {
+        cartItems = cartItems.filter(item => item.id !== productId);
+        saveCart();
+        updateCartBadge();
+        renderCartSidebar();
+    }
+
+    function renderCartSidebar() {
+        const container = document.getElementById("cartDynamicContent");
+        const footerDiv = document.getElementById("cartFooter");
+        if (!container) return;
+
+        if (cartItems.length === 0) {
+            container.innerHTML = `<div class="empty-cart-message"><img src="kosik.png" style="width:70px; opacity:0.6;"><p>Váš nákupný košík je momentálne prázdny.</p></div>`;
+            if (footerDiv) footerDiv.innerHTML = `<a href="#" class="checkout-btn" id="emptyCheckoutBtn">POKRAČOVAŤ K PLATBE</a>`;
+            const emptyBtn = document.getElementById("emptyCheckoutBtn");
+            if (emptyBtn) emptyBtn.addEventListener("click", (e) => { e.preventDefault(); alert("Košík je prázdny. Pridajte produkty."); });
+            return;
+        }
+
+        let itemsHtml = "";
+        let totalPrice = 0;
+        for (let item of cartItems) {
+            const product = getProductById(item.id);
+            if (!product) continue;
+            const itemTotal = product.price * item.quantity;
+            totalPrice += itemTotal;
+            itemsHtml += `
+                <div class="cart-item" data-cart-id="${product.id}">
+                    <img class="cart-item-img" src="${product.image}" alt="${product.name}">
+                    <div class="cart-item-info">
+                        <div class="cart-item-title">${product.name}</div>
+                        <div class="cart-item-price">${product.price.toFixed(2)} €</div>
+                        <div class="cart-item-quantity">
+                            <button class="cart-qty-minus" data-id="${product.id}">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="cart-qty-plus" data-id="${product.id}">+</button>
+                            <button class="cart-item-remove" data-id="${product.id}">Odstrániť</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        container.innerHTML = itemsHtml;
+        footerDiv.innerHTML = `
+            <div class="cart-total">Celkom: ${totalPrice.toFixed(2)} €</div>
+            <button class="checkout-btn" id="checkoutActionBtn">POKRAČOVAŤ K PLATBE</button>
+        `;
+
+        document.querySelectorAll(".cart-qty-minus").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const id = parseInt(btn.getAttribute("data-id"));
+                changeQuantity(id, -1);
+            });
+        });
+        document.querySelectorAll(".cart-qty-plus").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const id = parseInt(btn.getAttribute("data-id"));
+                changeQuantity(id, 1);
+            });
+        });
+        document.querySelectorAll(".cart-item-remove").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const id = parseInt(btn.getAttribute("data-id"));
+                removeItemCompletely(id);
+            });
+        });
+        const checkoutBtn = document.getElementById("checkoutActionBtn");
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                alert(`Ďakujeme za nákup! Celková suma: ${totalPrice.toFixed(2)} €. Vaša objednávka bude čoskoro doručená.`);
+            });
+        }
+    }
+
+    const modal = document.getElementById("detailModal");
+    const modalImg = document.getElementById("modalImage");
+    const modalBrand = document.getElementById("modalBrand");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalPrice = document.getElementById("modalPrice");
+    const modalDesc = document.getElementById("modalDesc");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+
+    function showProductDetail(productId) {
+        const product = getProductById(productId);
+        if (!product) return;
+        modalImg.src = product.image;
+        modalImg.alt = product.name;
+        modalBrand.innerText = product.brand.toUpperCase();
+        modalTitle.innerText = product.name;
+        modalPrice.innerText = `${product.price.toFixed(2)} €`;
+        modalDesc.innerText = product.description;
+        modal.classList.add("active");
+    }
+
+    function closeModal() {
+        modal.classList.remove("active");
+    }
+
+    function renderProducts() {
+        const grid = document.getElementById("productGridContainer");
+        if (!grid) return;
+        grid.innerHTML = "";
+        productsData.forEach(prod => {
+            const card = document.createElement("div");
+            card.className = "product-card";
+            card.setAttribute("data-id", prod.id);
+            card.innerHTML = `
+                <div class="product-image-container">
+                    <img src="${prod.image}" alt="${prod.name}">
+                </div>
+                <div class="brand-name">${prod.brand}</div>
+                <div class="product-title">${prod.name}</div>
+                <div class="new-price">${prod.price.toFixed(2)} €</div>
+                <div class="product-buttons">
+                    <button class="btn-detail" data-id="${prod.id}">Detail</button>
+                    <button class="btn-cart" data-id="${prod.id}">Do košíka</button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        document.querySelectorAll(".btn-detail").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const id = parseInt(btn.getAttribute("data-id"));
+                showProductDetail(id);
+            });
+        });
+        document.querySelectorAll(".btn-cart").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const id = parseInt(btn.getAttribute("data-id"));
+                addToCart(id);
+            });
+        });
+    }
+
+    function filterProducts(searchTerm) {
+        const term = searchTerm.toLowerCase().trim();
+        const cards = document.querySelectorAll(".product-card");
+        productsData.forEach((prod, idx) => {
+            const card = cards[idx];
+            if (!card) return;
+            const match = prod.name.toLowerCase().includes(term) || prod.brand.toLowerCase().includes(term);
+            card.style.display = match ? "block" : "none";
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        loadCart();
+        renderProducts();
+        updateCartBadge();
+        renderCartSidebar();
+
+        const searchInput = document.getElementById("searchInput");
+        if (searchInput) {
+            searchInput.addEventListener("input", (e) => filterProducts(e.target.value));
+        }
+
+        closeModalBtn.addEventListener("click", closeModal);
+        modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+    });
+
+    function openNav() { document.getElementById("mySidenav").style.width = "300px"; }
+    function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
+    function toggleCart() {
+        const cart = document.getElementById("cartSidebar");
+        cart.style.width = (cart.style.width === "400px") ? "0" : "400px";
+        if (cart.style.width === "400px") renderCartSidebar();
+    }
+    window.addEventListener('click', function(e) {
+        const sidenav = document.getElementById("mySidenav");
+        const cart = document.getElementById("cartSidebar");
+        const hamburgerBtn = document.querySelector('.hamburger');
+        const cartTrigger = document.querySelector('.cart-trigger');
+        if (sidenav.style.width === "300px" && !sidenav.contains(e.target) && !hamburgerBtn?.contains(e.target)) closeNav();
+        if (cart.style.width === "400px" && !cart.contains(e.target) && !cartTrigger?.contains(e.target)) cart.style.width = "0";
+    });
+</script>
 </body>
 </html>

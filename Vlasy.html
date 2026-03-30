@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="sk">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1200">
-    <title>C-SKIN | Vlasy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>C-SKIN | Vlasy – profesionálna starostlivosť o vlasy</title>
     <style>
         * {
             margin: 0;
@@ -20,13 +19,24 @@
             --bg-light: #ffffff;
             --text-gray: #7a7a7a;
             --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --max-width-default: 1400px;
+            --gap-default: 40px 25px;
         }
 
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             background-color: var(--bg-light);
-            min-width: 1200px;
-            animation: plynulyNastup 2s ease-in-out;
+            overflow-x: hidden;
+            width: 100%;
+            animation: plynulyNastup 1.6s ease-out;
+        }
+
+        .top-bar, 
+        .product-section {
+            width: 94%;
+            max-width: var(--max-width-default);
+            margin-left: auto;
+            margin-right: auto;
         }
 
         header {
@@ -39,16 +49,15 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            position: relative;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
         .header-left {
             display: flex;
             align-items: center;
             gap: 30px;
+            flex-shrink: 0;
         }
 
         .hamburger {
@@ -62,12 +71,13 @@
 
         .hamburger:hover {
             color: white;
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
 
         .logo-img {
             width: 100px;
             transition: var(--transition);
+            display: block;
         }
 
         .logo-img:hover {
@@ -75,9 +85,9 @@
         }
 
         .search-container {
-            flex-grow: 1;
-            max-width: 450px;
-            margin: 0 40px;
+            flex: 1;
+            min-width: 220px;
+            max-width: 480px;
         }
 
         .search-container input {
@@ -86,6 +96,14 @@
             border: 1px solid #ddd;
             border-radius: 50px;
             outline: none;
+            font-size: 1rem;
+            transition: 0.2s;
+            background: white;
+        }
+
+        .search-container input:focus {
+            border-color: var(--primary-olive);
+            box-shadow: 0 0 0 2px rgba(147, 156, 108, 0.2);
         }
 
         .cart-trigger {
@@ -95,6 +113,7 @@
             transition: var(--transition);
             display: flex;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .cart-trigger img {
@@ -130,7 +149,7 @@
             position: fixed;
             z-index: 3000;
             top: 0;
-            transition: 0.5s;
+            transition: 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             overflow-x: hidden;
         }
 
@@ -138,13 +157,13 @@
             left: 0;
             background-color: var(--primary-olive);
             padding-top: 60px;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 5px 0 25px rgba(0, 0, 0, 0.2);
         }
 
         .cart-sidebar {
             right: 0;
             background-color: white;
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.12);
             display: flex;
             flex-direction: column;
         }
@@ -154,13 +173,15 @@
             font-size: 22px;
             color: var(--dark-green);
             display: block;
-            font-family: serif;
+            font-family: 'Times New Roman', serif;
             font-weight: bold;
+            transition: 0.2s;
         }
 
         .sidenav a:hover {
             color: white;
             padding-left: 45px;
+            background: rgba(0, 0, 0, 0.05);
         }
 
         .close-btn {
@@ -169,6 +190,7 @@
             font-size: 40px;
             cursor: pointer;
             color: var(--dark-green);
+            transition: 0.2s;
         }
 
         .sidenav .close-btn {
@@ -187,53 +209,127 @@
             align-items: center;
         }
 
-        .cart-body {
-            padding: 40px;
+        .cart-body-scroll {
             flex-grow: 1;
-            text-align: center;
-            color: var(--text-gray);
+            overflow-y: auto;
+            padding: 20px;
+            max-height: 60vh;
         }
 
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        .cart-item-img {
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+            background: #f5f5f0;
+            border-radius: 8px;
+            padding: 5px;
+        }
+        .cart-item-info {
+            flex: 1;
+            font-size: 14px;
+        }
+        .cart-item-title {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .cart-item-price {
+            color: var(--dark-green);
+            font-weight: 600;
+        }
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .cart-item-quantity button {
+            background: #f0f0e0;
+            border: none;
+            width: 26px;
+            height: 26px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .cart-item-quantity button:hover {
+            background: var(--primary-olive);
+            color: white;
+        }
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: #b33;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 8px;
+            text-decoration: underline;
+        }
+        .cart-total {
+            padding: 20px;
+            border-top: 2px solid var(--header-beige);
+            font-weight: bold;
+            font-size: 18px;
+            text-align: right;
+            background: white;
+        }
         .checkout-btn {
             background: var(--dark-green);
             color: white;
-            padding: 20px;
+            padding: 18px;
             text-align: center;
             font-weight: bold;
             transition: 0.3s;
+            display: block;
+            border: none;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
         }
-
         .checkout-btn:hover {
             background: var(--primary-olive);
         }
+        .empty-cart-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-gray);
+        }
 
         nav {
-            background-color: rgba(147, 156, 108, 0.95);
-            padding: 12px 0;
+            background-color: rgba(147, 156, 108, 0.96);
+            padding: 14px 0;
             text-align: center;
             position: sticky;
             top: 0;
             z-index: 1000;
+            backdrop-filter: blur(2px);
         }
 
         .sale-title {
-             color: #1a3311;
-            font-family: serif;
-            font-size: 26px;
+            color: #1a3311;
+            font-family: 'Times New Roman', serif;
+            font-size: 28px;
             letter-spacing: 8px;
             text-transform: uppercase;
+            font-weight: 500;
         }
 
         .product-section {
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 0 20px;
+            margin: 60px auto;
+            padding: 0 16px;
         }
 
         .product-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 40px 25px;
+            gap: var(--gap-default);
         }
 
         .product-card {
@@ -241,190 +337,524 @@
             transition: var(--transition);
             padding-bottom: 20px;
             border-bottom: 1px solid #f0f0f0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
         }
 
         .product-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.08);
+            border-bottom-color: var(--primary-olive);
         }
 
         .product-image-container {
-            height: 220px;
-            background: #fcfcfc;
+            height: 230px;
+            background: #fafaf7;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            border-radius: 8px;
         }
 
         .product-card img {
-            max-width: 75%;
+            max-width: 80%;
             max-height: 75%;
             transition: var(--transition);
+            object-fit: contain;
         }
 
         .brand-name {
             color: var(--text-gray);
-            font-size: 10px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 2px;
+            font-weight: 500;
         }
 
         .product-title {
             font-weight: bold;
             font-size: 15px;
-            margin: 5px 0;
-            height: 40px;
+            margin: 8px 0 6px;
+            padding: 0 8px;
+            height: 44px;
             overflow: hidden;
+            color: #1f2e1a;
         }
 
         .new-price {
             font-weight: bold;
-            font-size: 18px;
+            font-size: 19px;
+            color: var(--dark-green);
+            letter-spacing: -0.3px;
+            margin: 8px 0;
+        }
+
+        .product-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 10px;
+            padding: 0 12px;
+        }
+        .btn-detail, .btn-cart {
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+        .btn-detail {
+            background: #e9e9dd;
+            color: #2c3e1f;
+        }
+        .btn-detail:hover {
+            background: #d0cfb5;
+            transform: scale(0.97);
+        }
+        .btn-cart {
+            background: var(--dark-green);
+            color: white;
+        }
+        .btn-cart:hover {
+            background: #2f5320;
+            transform: scale(0.97);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 4000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-container {
+            background: white;
+            max-width: 550px;
+            width: 90%;
+            border-radius: 32px;
+            padding: 30px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.3);
+            transform: scale(0.95);
+            transition: transform 0.2s;
+        }
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            font-size: 32px;
+            cursor: pointer;
+            color: #888;
+        }
+        .modal-close:hover {
+            color: black;
+        }
+        .modal-img {
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+            margin-bottom: 18px;
+        }
+        .modal-brand {
+            color: var(--text-gray);
+            letter-spacing: 2px;
+            font-size: 12px;
+        }
+        .modal-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .modal-price {
+            font-size: 26px;
+            color: var(--dark-green);
+            font-weight: bold;
+            margin: 12px 0;
+        }
+        .modal-desc {
+            color: #444;
+            line-height: 1.5;
+            margin-top: 12px;
+            font-size: 15px;
         }
 
         footer {
             background-color: var(--primary-olive);
-            padding: 50px 20px;
+            padding: 55px 20px;
             text-align: center;
             color: white;
             margin-top: 100px;
+            font-size: 15px;
+            letter-spacing: 0.5px;
         }
 
         @keyframes plynulyNastup {
-            from {
-                opacity: 0;
-            }
+            from { opacity: 0; transform: translateY(12px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
 
-            to {
-                opacity: 1;
-            }
+        @media screen and (min-width: 1400px) {
+            :root { --max-width-default: 1440px; --gap-default: 48px 32px; }
+            .sale-title { font-size: 32px; letter-spacing: 10px; }
+            .product-title { font-size: 16px; height: 48px; }
+            .product-image-container { height: 250px; }
+        }
+        @media screen and (min-width: 1700px) {
+            :root { --max-width-default: 1600px; --gap-default: 58px 40px; }
+            .product-grid { gap: 50px 40px; }
+            .product-title { font-size: 17px; }
+            .sale-title { font-size: 36px; letter-spacing: 12px; }
+        }
+        @media screen and (min-width: 1200px) and (max-width: 1399px) {
+            .top-bar, .product-section { max-width: 1200px; width: 95%; }
+            .product-grid { gap: 35px 22px; }
+        }
+        @media screen and (max-width: 1199px) {
+            .product-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
         }
     </style>
 </head>
-
 <body>
 
-    <div id="mySidenav" class="sidenav">
-        <span class="close-btn" onclick="closeNav()">&times;</span>
-        <a href="index.html">Domov</a>
-        <a href="Akcia.html">Akcie</a>
-        <a href="Parfemy.html">Parfémy</a>
-        <a href="Licenie.html">Líčenie</a>
-        <a href="Vlasy.html">Vlasy</a>
-        <a href="Telo.html">Telo</a>
-        <a href="Zuby.html">Zuby</a>
+<div id="mySidenav" class="sidenav">
+    <span class="close-btn" onclick="closeNav()">&times;</span>
+    <a href="index.html">Domov</a>
+    <a href="Akcia.html">Akcie</a>
+    <a href="parfémy.html">Parfémy</a>
+    <a href="líčenie.html">Líčenie</a>
+    <a href="vlasy.html">Vlasy</a>
+    <a href="telo.html">Telo</a>
+    <a href="zuby.html">Zuby</a>
+</div>
+
+<div id="cartSidebar" class="cart-sidebar">
+    <div class="cart-header">
+        <h2 style="font-family: 'Times New Roman', serif; color: var(--dark-green);">Váš košík</h2>
+        <span class="close-btn" onclick="toggleCart()">&times;</span>
     </div>
-
-    <div id="cartSidebar" class="cart-sidebar">
-        <div class="cart-header">
-            <h2 style="font-family: serif; color: var(--dark-green);">Váš košík</h2>
-            <span class="close-btn" onclick="toggleCart()">&times;</span>
-        </div>
-        <div class="cart-body">
-            <img src="kosik.png" alt="Košík" style="width: 100px; height: auto; margin-bottom: 20px; opacity: 0.8;">
-            <p>Váš nákupný košík je momentálne prázdny.</p>
-        </div>
-        <a href="#" class="checkout-btn">POKRAČOVAŤ K PLATBE</a>
+    <div id="cartDynamicContent" class="cart-body-scroll">
+        <div class="empty-cart-message">Váš nákupný košík je momentálne prázdny.</div>
     </div>
+    <div id="cartFooter" style="background: white;"></div>
+</div>
 
-    <header>
-        <div class="top-bar">
-            <div class="header-left">
-                <div class="hamburger" onclick="openNav()">&#9776;</div>
-                <a href="index.html">
-                    <img class="logo-img" src="Laštíková_zadanie_č.3_Logo-removebg-preview.png" alt="Logo">
-                </a>
-            </div>
-
-            <div class="search-container">
-                <input type="text" placeholder="Hľadať produkty na vlasy...">
-            </div>
-
-            <div class="cart-trigger" onclick="toggleCart()">
-                <img src="kosik.png" alt="Košík">
-                <span class="cart-badge">0</span>
-            </div>
+<header>
+    <div class="top-bar">
+        <div class="header-left">
+            <div class="hamburger" onclick="openNav()">&#9776;</div>
+            <a href="#"><img class="logo-img" src="Laštíková_zadanie_č.3_Logo-removebg-preview.png" alt="C-SKIN Logo"></a>
         </div>
-    </header>
-
-    <nav>
-        <h1 class="sale-title">Vlasy</h1>
-    </nav>
-
-    <section class="product-section">
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="product-image-container"><img src="v1.jpg" alt="Vlasy"></div>
-                <div class="brand-name">Olaplex</div>
-                <div class="product-title">No. 4 Bond Maintenance Shampoo</div>
-                <div class="price-box"><span class="new-price">28,50 €</span></div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-container"><img src="v2.jpg" alt="Vlasy"></div>
-                <div class="brand-name">Kérastase</div>
-                <div class="product-title">Elixir Ultime L'Huile Originale</div>
-                <div class="price-box"><span class="new-price">42,00 €</span></div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-container"><img src="v3.jpg" alt="Vlasy"></div>
-                <div class="brand-name">L'Oréal Professionnel</div>
-                <div class="product-title">Absolut Repair Gold Quinoa Mask</div>
-                <div class="price-box"><span class="new-price">24,90 €</span></div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-container"><img src="v4.jpg" alt="Vlasy"></div>
-                <div class="brand-name">Moroccanoil</div>
-                <div class="product-title">Treatment Original Oil</div>
-                <div class="price-box"><span class="new-price">39,00 €</span></div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-container"><img src="v5.jpg" alt="Vlasy"></div>
-                <div class="brand-name">Dyson</div>
-                <div class="product-title">Airwrap™ Multi-styler</div>
-                <div class="price-box"><span class="new-price">549,00 €</span></div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-container"><img src="v6.jpg" alt="Vlasy"></div>
-                <div class="brand-name">Tangle Teezer</div>
-                <div class="product-title">The Ultimate Detangler Black</div>
-                <div class="price-box"><span class="new-price">14,50 €</span></div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-container"><img src="v7.jpg" alt="Vlasy"></div>
-                <div class="brand-name">Redken</div>
-                <div class="product-title">Extreme Length Conditioner</div>
-                <div class="price-box"><span class="new-price">22,00 €</span></div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image-container"><img src="v8.jpg" alt="Vlasy"></div>
-                <div class="brand-name">Gisou</div>
-                <div class="product-title">Honey Infused Hair Mask</div>
-                <div class="price-box"><span class="new-price">45,00 €</span></div>
-            </div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Hľadať produkty ...">
         </div>
-    </section>
+        <div class="cart-trigger" onclick="toggleCart()">
+            <img src="kosik.png" alt="Košík">
+            <span id="cartBadge" class="cart-badge">0</span>
+        </div>
+    </div>
+</header>
 
-    <footer>
-        &copy; 2026 C-SKIN PREMIER | Profesionálna starostlivosť | C-SKIN@gmail.com
-    </footer>
+<nav>
+    <h1 class="sale-title">Vlasy</h1>
+</nav>
 
-    <script>
-        function openNav() { document.getElementById("mySidenav").style.width = "300px"; }
-        function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
+<section class="product-section">
+    <div id="productGridContainer" class="product-grid">
+    </div>
+</section>
 
-        function toggleCart() {
-            var cart = document.getElementById("cartSidebar");
-            cart.style.width = (cart.style.width === "400px") ? "0" : "400px";
+<footer>
+    &copy; 2026 C-SKIN PREMIER | Profesionálna starostlivosť | C-SKIN@gmail.com
+</footer>
+
+<div id="detailModal" class="modal-overlay">
+    <div class="modal-container">
+        <span class="modal-close" id="closeModalBtn">&times;</span>
+        <img id="modalImage" class="modal-img" src="" alt="produkt">
+        <div class="modal-brand" id="modalBrand"></div>
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-price" id="modalPrice"></div>
+        <div class="modal-desc" id="modalDesc"></div>
+    </div>
+</div>
+
+<script>
+    const productsData = [
+        { id: 1, brand: "Olaplex", name: "No. 4 Bond Maintenance Shampoo", price: 28.50, image: "v1.jpg", description: "Revolučný šampón na obnovu disulfidických väzieb vlasov. Posilňuje, hydratuje a chráni farbu. Vhodný pre všetky typy vlasov." },
+        { id: 2, brand: "Kérastase", name: "Elixir Ultime L'Huile Originale", price: 42.00, image: "v2.jpg", description: "Luxusný olej na vlasy s extraktom z kukurice, pšeničných klíčkov a kamélie. Dodáva lesk, výživu a ochranu pred teplom." },
+        { id: 3, brand: "L'Oréal Professionnel", name: "Absolut Repair Gold Quinoa Mask", price: 24.90, image: "v3.jpg", description: "Intenzívna reparačná maska s quinoa proteínom a zlatým olejom. Obnovuje poškodené vlasy, zanecháva ich jemné a hodvábne." },
+        { id: 4, brand: "Moroccanoil", name: "Treatment Original Oil", price: 39.00, image: "v4.jpg", description: "Ikona starostlivosti – arganový olej bez hmotnosti. Vyživuje, urýchľuje schnutie a dodáva neprekonateľný lesk." },
+        { id: 5, brand: "Dyson", name: "Airwrap™ Multi-styler", price: 549.00, image: "v5.jpg", description: "Vílový stylingový set s Coanda efektom. Natáča, vyrovnáva a suší bez extrémneho tepla. Kompletná sada 6 nástavcov." },
+        { id: 6, brand: "Tangle Teezer", name: "The Ultimate Detangler Black", price: 14.50, image: "v6.jpg", description: "Profesionálna kefa na rozčesávanie mokrých i suchých vlasov. Dvojité zuby minimalizujú lámanie a ťahanie." },
+        { id: 7, brand: "Redken", name: "Extreme Length Conditioner", price: 22.00, image: "v7.jpg", description: "Kondicionér na podporu rastu a dĺžky. Zabraňuje lámaniu, spevňuje vlákno a zanecháva vlasy silnejšie." },
+        { id: 8, brand: "Gisou", name: "Honey Infused Hair Mask", price: 45.00, image: "v8.jpg", description: "Medová maska od Gisou, bohatá na propolis a hyalurón. Hĺbková hydratácia, regenerácia a jemnosť od korienkov po končeky." }
+    ];
+
+    let cartItems = []; 
+
+    function saveCart() {
+        localStorage.setItem("cskin_cart", JSON.stringify(cartItems));
+    }
+    function loadCart() {
+        const saved = localStorage.getItem("cskin_cart");
+        if (saved) {
+            try {
+                cartItems = JSON.parse(saved);
+            } catch(e) { cartItems = []; }
+        } else {
+            cartItems = [];
         }
-    </script>
+    }
 
+    function getProductById(id) {
+        return productsData.find(p => p.id === id);
+    }
+
+    function updateCartBadge() {
+        const totalCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+        const badge = document.getElementById("cartBadge");
+        if (badge) badge.innerText = totalCount;
+    }
+
+    function addToCart(productId) {
+        const existing = cartItems.find(item => item.id === productId);
+        if (existing) {
+            existing.quantity += 1;
+        } else {
+            cartItems.push({ id: productId, quantity: 1 });
+        }
+        saveCart();
+        updateCartBadge();
+        renderCartSidebar();
+        const btn = document.querySelector(`.product-card[data-id='${productId}'] .btn-cart`);
+        if (btn) btn.style.transform = "scale(0.95)";
+        setTimeout(() => { if(btn) btn.style.transform = ""; }, 150);
+    }
+
+    function changeQuantity(productId, delta) {
+        const idx = cartItems.findIndex(item => item.id === productId);
+        if (idx !== -1) {
+            const newQty = cartItems[idx].quantity + delta;
+            if (newQty <= 0) {
+                cartItems.splice(idx, 1);
+            } else {
+                cartItems[idx].quantity = newQty;
+            }
+            saveCart();
+            updateCartBadge();
+            renderCartSidebar();
+        }
+    }
+
+    function removeItemCompletely(productId) {
+        cartItems = cartItems.filter(item => item.id !== productId);
+        saveCart();
+        updateCartBadge();
+        renderCartSidebar();
+    }
+
+    function renderCartSidebar() {
+        const container = document.getElementById("cartDynamicContent");
+        const footerDiv = document.getElementById("cartFooter");
+        if (!container) return;
+
+        if (cartItems.length === 0) {
+            container.innerHTML = `<div class="empty-cart-message"><img src="kosik.png" style="width:70px; opacity:0.6;"><p>Váš nákupný košík je momentálne prázdny.</p></div>`;
+            if (footerDiv) footerDiv.innerHTML = `<a href="#" class="checkout-btn" id="emptyCheckoutBtn">POKRAČOVAŤ K PLATBE</a>`;
+            const btn = document.getElementById("emptyCheckoutBtn");
+            if (btn) btn.addEventListener("click", (e) => { e.preventDefault(); alert("Košík je prázdny. Pridajte produkty."); });
+            return;
+        }
+
+        let itemsHtml = "";
+        let totalPrice = 0;
+        for (let item of cartItems) {
+            const product = getProductById(item.id);
+            if (!product) continue;
+            const itemTotal = product.price * item.quantity;
+            totalPrice += itemTotal;
+            itemsHtml += `
+                <div class="cart-item" data-cart-id="${product.id}">
+                    <img class="cart-item-img" src="${product.image}" alt="${product.name}">
+                    <div class="cart-item-info">
+                        <div class="cart-item-title">${product.name}</div>
+                        <div class="cart-item-price">${product.price.toFixed(2)} €</div>
+                        <div class="cart-item-quantity">
+                            <button class="cart-qty-minus" data-id="${product.id}">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="cart-qty-plus" data-id="${product.id}">+</button>
+                            <button class="cart-item-remove" data-id="${product.id}">Odstrániť</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        container.innerHTML = itemsHtml;
+        footerDiv.innerHTML = `
+            <div class="cart-total">Celkom: ${totalPrice.toFixed(2)} €</div>
+            <button class="checkout-btn" id="checkoutActionBtn">POKRAČOVAŤ K PLATBE</button>
+        `;
+
+        document.querySelectorAll(".cart-qty-minus").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const id = parseInt(btn.getAttribute("data-id"));
+                changeQuantity(id, -1);
+            });
+        });
+        document.querySelectorAll(".cart-qty-plus").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const id = parseInt(btn.getAttribute("data-id"));
+                changeQuantity(id, 1);
+            });
+        });
+        document.querySelectorAll(".cart-item-remove").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const id = parseInt(btn.getAttribute("data-id"));
+                removeItemCompletely(id);
+            });
+        });
+        const checkoutBtn = document.getElementById("checkoutActionBtn");
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                alert(`Ďakujeme za nákup! Celková suma: ${totalPrice.toFixed(2)} €. Toto je ukážková implementácia.`);
+            });
+        }
+    }
+
+    const modal = document.getElementById("detailModal");
+    const modalImg = document.getElementById("modalImage");
+    const modalBrand = document.getElementById("modalBrand");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalPrice = document.getElementById("modalPrice");
+    const modalDesc = document.getElementById("modalDesc");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+
+    function showProductDetail(productId) {
+        const product = getProductById(productId);
+        if (!product) return;
+        modalImg.src = product.image;
+        modalImg.alt = product.name;
+        modalBrand.innerText = product.brand.toUpperCase();
+        modalTitle.innerText = product.name;
+        modalPrice.innerText = `${product.price.toFixed(2)} €`;
+        modalDesc.innerText = product.description;
+        modal.classList.add("active");
+    }
+
+    function closeModal() {
+        modal.classList.remove("active");
+    }
+
+    function renderProducts() {
+        const grid = document.getElementById("productGridContainer");
+        if (!grid) return;
+        grid.innerHTML = "";
+        productsData.forEach(prod => {
+            const card = document.createElement("div");
+            card.className = "product-card";
+            card.setAttribute("data-id", prod.id);
+            card.innerHTML = `
+                <div class="product-image-container">
+                    <img src="${prod.image}" alt="${prod.name}">
+                </div>
+                <div class="brand-name">${prod.brand}</div>
+                <div class="product-title">${prod.name}</div>
+                <div class="new-price">${prod.price.toFixed(2)} €</div>
+                <div class="product-buttons">
+                    <button class="btn-detail" data-id="${prod.id}">Detail</button>
+                    <button class="btn-cart" data-id="${prod.id}">Do košíka</button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        document.querySelectorAll(".btn-detail").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const id = parseInt(btn.getAttribute("data-id"));
+                showProductDetail(id);
+            });
+        });
+        document.querySelectorAll(".btn-cart").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const id = parseInt(btn.getAttribute("data-id"));
+                addToCart(id);
+                const cartSide = document.getElementById("cartSidebar");
+                if (cartSide.style.width !== "400px") {
+                } else {
+                    renderCartSidebar();
+                }
+            });
+        });
+    }
+
+    function filterProducts(searchTerm) {
+        const term = searchTerm.toLowerCase().trim();
+        const cards = document.querySelectorAll(".product-card");
+        productsData.forEach((prod, idx) => {
+            const card = cards[idx];
+            if (!card) return;
+            const match = prod.name.toLowerCase().includes(term) || prod.brand.toLowerCase().includes(term);
+            card.style.display = match ? "block" : "none";
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        loadCart();
+        renderProducts();
+        updateCartBadge();
+        renderCartSidebar();
+
+        const searchInput = document.getElementById("searchInput");
+        if (searchInput) {
+            searchInput.addEventListener("input", (e) => {
+                filterProducts(e.target.value);
+            });
+        }
+
+        closeModalBtn.addEventListener("click", closeModal);
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) closeModal();
+        });
+    });
+
+    function openNav() { document.getElementById("mySidenav").style.width = "300px"; }
+    function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
+    function toggleCart() {
+        const cart = document.getElementById("cartSidebar");
+        cart.style.width = (cart.style.width === "400px") ? "0" : "400px";
+        if (cart.style.width === "400px") renderCartSidebar(); 
+    }
+    window.addEventListener('click', function(e) {
+        const sidenav = document.getElementById("mySidenav");
+        const cart = document.getElementById("cartSidebar");
+        const hamburgerBtn = document.querySelector('.hamburger');
+        const cartTrigger = document.querySelector('.cart-trigger');
+        if (sidenav.style.width === "300px" && !sidenav.contains(e.target) && !hamburgerBtn?.contains(e.target)) closeNav();
+        if (cart.style.width === "400px" && !cart.contains(e.target) && !cartTrigger?.contains(e.target)) cart.style.width = "0";
+    });
+</script>
 </body>
-
 </html>
