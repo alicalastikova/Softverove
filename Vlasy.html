@@ -425,81 +425,150 @@
             transform: scale(0.97);
         }
 
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(4px);
-            z-index: 4000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: 0.2s;
-        }
-        .modal-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .modal-container {
+        .checkout-panel {
+            max-width: 1280px;
+            margin: 40px auto;
             background: white;
-            max-width: 550px;
-            width: 90%;
-            border-radius: 32px;
+            border-radius: 28px;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1);
             padding: 30px;
-            position: relative;
-            text-align: center;
-            box-shadow: 0 25px 40px rgba(0,0,0,0.3);
-            transform: scale(0.95);
-            transition: transform 0.2s;
+            border: 1px solid #eaeadf;
         }
-        .modal-overlay.active .modal-container {
-            transform: scale(1);
+        .checkout-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
         }
-        .modal-close {
-            position: absolute;
-            top: 18px;
-            right: 24px;
-            font-size: 32px;
-            cursor: pointer;
-            color: #888;
+        .checkout-items {
+            flex: 1.4;
+            background: #fefef8;
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
         }
-        .modal-close:hover {
-            color: black;
+        .checkout-form {
+            flex: 1;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #f0efe2;
         }
-        .modal-img {
-            width: 140px;
-            height: 140px;
+        .checkout-product-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            align-items: center;
+            border-bottom: 1px solid #e2e2d6;
+            padding-bottom: 16px;
+        }
+        .checkout-product-img {
+            width: 70px;
+            height: 70px;
             object-fit: contain;
-            margin-bottom: 18px;
+            background: white;
+            border-radius: 12px;
+            padding: 5px;
+            border: 1px solid #eaead5;
         }
-        .modal-brand {
-            color: var(--text-gray);
-            letter-spacing: 2px;
-            font-size: 12px;
+        .checkout-product-details {
+            flex: 1;
         }
-        .modal-title {
-            font-size: 24px;
+        .checkout-product-title {
             font-weight: bold;
-            margin: 10px 0;
-        }
-        .modal-price {
-            font-size: 26px;
-            color: var(--dark-green);
-            font-weight: bold;
-            margin: 12px 0;
-        }
-        .modal-desc {
-            color: #444;
-            line-height: 1.5;
-            margin-top: 12px;
             font-size: 15px;
         }
+        .checkout-product-qty-price {
+            font-size: 13px;
+            color: #4a4a4a;
+            margin-top: 5px;
+        }
+        .checkout-total {
+            text-align: right;
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 2px dashed var(--primary-olive);
+            color: var(--dark-green);
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #1f2e1a;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #ccc;
+            border-radius: 32px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        .form-group input:focus {
+            border-color: var(--primary-olive);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(147,156,108,0.25);
+        }
+        .card-row {
+            display: flex;
+            gap: 12px;
+        }
+        .card-row .form-group {
+            flex: 1;
+        }
+        .payment-btn {
+            background: var(--dark-green);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 44px;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 12px;
+            transition: 0.2s;
+        }
+        .payment-btn:hover {
+            background: var(--primary-olive);
+            transform: scale(0.98);
+        }
+        .back-to-shop {
+            background: none;
+            border: 1px solid #bbb9a0;
+            padding: 10px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .back-to-shop:hover {
+            background: #f3f2e6;
+        }
+        .section-title {
+            font-size: 24px;
+            font-family: 'Times New Roman', serif;
+            margin-bottom: 20px;
+            color: var(--dark-green);
+            border-left: 5px solid var(--primary-olive);
+            padding-left: 14px;
+        }
 
+        @media screen and (max-width: 900px) {
+            .checkout-grid { flex-direction: column; }
+            .product-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+        }
+        @keyframes plynulyNastup {
+            from { opacity: 0; transform: translateY(12px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
         footer {
             background-color: var(--primary-olive);
             padding: 55px 20px;
@@ -507,32 +576,9 @@
             color: white;
             margin-top: 100px;
             font-size: 15px;
-            letter-spacing: 0.5px;
         }
-
-        @keyframes plynulyNastup {
-            from { opacity: 0; transform: translateY(12px);}
-            to { opacity: 1; transform: translateY(0);}
-        }
-
-        @media screen and (min-width: 1400px) {
-            :root { --max-width-default: 1440px; --gap-default: 48px 32px; }
-            .sale-title { font-size: 32px; letter-spacing: 10px; }
-            .product-title { font-size: 16px; height: 48px; }
-            .product-image-container { height: 250px; }
-        }
-        @media screen and (min-width: 1700px) {
-            :root { --max-width-default: 1600px; --gap-default: 58px 40px; }
-            .product-grid { gap: 50px 40px; }
-            .product-title { font-size: 17px; }
-            .sale-title { font-size: 36px; letter-spacing: 12px; }
-        }
-        @media screen and (min-width: 1200px) and (max-width: 1399px) {
-            .top-bar, .product-section { max-width: 1200px; width: 95%; }
-            .product-grid { gap: 35px 22px; }
-        }
-        @media screen and (max-width: 1199px) {
-            .product-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+        .hidden-section {
+            display: none;
         }
     </style>
 </head>
@@ -540,13 +586,13 @@
 
 <div id="mySidenav" class="sidenav">
     <span class="close-btn" onclick="closeNav()">&times;</span>
-    <a href="index.html">Domov</a>
-    <a href="Akcia.html">Akcie</a>
-    <a href="parfémy.html">Parfémy</a>
-    <a href="líčenie.html">Líčenie</a>
-    <a href="vlasy.html">Vlasy</a>
-    <a href="telo.html">Telo</a>
-    <a href="zuby.html">Zuby</a>
+    <a href="#">Domov</a>
+    <a href="#">Akcie</a>
+    <a href="#">Parfémy</a>
+    <a href="#">Líčenie</a>
+    <a href="#">Vlasy</a>
+    <a href="#">Telo</a>
+    <a href="#">Zuby</a>
 </div>
 
 <div id="cartSidebar" class="cart-sidebar">
@@ -580,10 +626,14 @@
     <h1 class="sale-title">Vlasy</h1>
 </nav>
 
-<section class="product-section">
-    <div id="productGridContainer" class="product-grid">
-    </div>
+<section class="product-section" id="mainProductSection">
+    <div id="productGridContainer" class="product-grid"></div>
 </section>
+
+<div id="checkoutPanel" class="checkout-panel hidden-section">
+    <button class="back-to-shop" id="backToShoppingBtn">← Späť na nákup</button>
+    <div id="checkoutDynamicContent"></div>
+</div>
 
 <footer>
     &copy; 2026 C-SKIN PREMIER | Profesionálna starostlivosť | C-SKIN@gmail.com
@@ -612,39 +662,25 @@
         { id: 8, brand: "Gisou", name: "Honey Infused Hair Mask", price: 45.00, image: "v8.jpg", description: "Medová maska od Gisou, bohatá na propolis a hyalurón. Hĺbková hydratácia, regenerácia a jemnosť od korienkov po končeky." }
     ];
 
-    let cartItems = []; 
+    let cartItems = [];
 
-    function saveCart() {
-        localStorage.setItem("cskin_cart", JSON.stringify(cartItems));
-    }
+    function saveCart() { localStorage.setItem("cskin_cart", JSON.stringify(cartItems)); }
     function loadCart() {
         const saved = localStorage.getItem("cskin_cart");
         if (saved) {
-            try {
-                cartItems = JSON.parse(saved);
-            } catch(e) { cartItems = []; }
-        } else {
-            cartItems = [];
-        }
+            try { cartItems = JSON.parse(saved); } catch(e) { cartItems = []; }
+        } else { cartItems = []; }
     }
-
-    function getProductById(id) {
-        return productsData.find(p => p.id === id);
-    }
-
+    function getProductById(id) { return productsData.find(p => p.id === id); }
     function updateCartBadge() {
         const totalCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
         const badge = document.getElementById("cartBadge");
         if (badge) badge.innerText = totalCount;
     }
-
     function addToCart(productId) {
         const existing = cartItems.find(item => item.id === productId);
-        if (existing) {
-            existing.quantity += 1;
-        } else {
-            cartItems.push({ id: productId, quantity: 1 });
-        }
+        if (existing) existing.quantity += 1;
+        else cartItems.push({ id: productId, quantity: 1 });
         saveCart();
         updateCartBadge();
         renderCartSidebar();
@@ -652,42 +688,41 @@
         if (btn) btn.style.transform = "scale(0.95)";
         setTimeout(() => { if(btn) btn.style.transform = ""; }, 150);
     }
-
     function changeQuantity(productId, delta) {
         const idx = cartItems.findIndex(item => item.id === productId);
         if (idx !== -1) {
             const newQty = cartItems[idx].quantity + delta;
-            if (newQty <= 0) {
-                cartItems.splice(idx, 1);
-            } else {
-                cartItems[idx].quantity = newQty;
-            }
+            if (newQty <= 0) cartItems.splice(idx, 1);
+            else cartItems[idx].quantity = newQty;
             saveCart();
             updateCartBadge();
             renderCartSidebar();
+            const checkoutPanel = document.getElementById("checkoutPanel");
+            if (checkoutPanel && !checkoutPanel.classList.contains("hidden-section")) {
+                renderCheckoutContent();
+            }
         }
     }
-
     function removeItemCompletely(productId) {
         cartItems = cartItems.filter(item => item.id !== productId);
         saveCart();
         updateCartBadge();
         renderCartSidebar();
+        const checkoutPanel = document.getElementById("checkoutPanel");
+        if (checkoutPanel && !checkoutPanel.classList.contains("hidden-section")) renderCheckoutContent();
     }
 
     function renderCartSidebar() {
         const container = document.getElementById("cartDynamicContent");
         const footerDiv = document.getElementById("cartFooter");
         if (!container) return;
-
         if (cartItems.length === 0) {
             container.innerHTML = `<div class="empty-cart-message"><img src="kosik.png" style="width:70px; opacity:0.6;"><p>Váš nákupný košík je momentálne prázdny.</p></div>`;
-            if (footerDiv) footerDiv.innerHTML = `<a href="#" class="checkout-btn" id="emptyCheckoutBtn">POKRAČOVAŤ K PLATBE</a>`;
-            const btn = document.getElementById("emptyCheckoutBtn");
-            if (btn) btn.addEventListener("click", (e) => { e.preventDefault(); alert("Košík je prázdny. Pridajte produkty."); });
+            if (footerDiv) footerDiv.innerHTML = `<button class="checkout-btn" id="emptyCheckoutBtn">POKRAČOVAŤ K PLATBE</button>`;
+            const emptyBtn = document.getElementById("emptyCheckoutBtn");
+            if (emptyBtn) emptyBtn.addEventListener("click", (e) => { e.preventDefault(); if(cartItems.length === 0) alert("Košík je prázdny. Pridajte produkty."); else showCheckout(); });
             return;
         }
-
         let itemsHtml = "";
         let totalPrice = 0;
         for (let item of cartItems) {
@@ -716,31 +751,120 @@
             <div class="cart-total">Celkom: ${totalPrice.toFixed(2)} €</div>
             <button class="checkout-btn" id="checkoutActionBtn">POKRAČOVAŤ K PLATBE</button>
         `;
-
         document.querySelectorAll(".cart-qty-minus").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                const id = parseInt(btn.getAttribute("data-id"));
-                changeQuantity(id, -1);
-            });
+            btn.addEventListener("click", (e) => { const id = parseInt(btn.getAttribute("data-id")); changeQuantity(id, -1); });
         });
         document.querySelectorAll(".cart-qty-plus").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                const id = parseInt(btn.getAttribute("data-id"));
-                changeQuantity(id, 1);
-            });
+            btn.addEventListener("click", (e) => { const id = parseInt(btn.getAttribute("data-id")); changeQuantity(id, 1); });
         });
         document.querySelectorAll(".cart-item-remove").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                const id = parseInt(btn.getAttribute("data-id"));
-                removeItemCompletely(id);
-            });
+            btn.addEventListener("click", (e) => { const id = parseInt(btn.getAttribute("data-id")); removeItemCompletely(id); });
         });
         const checkoutBtn = document.getElementById("checkoutActionBtn");
-        if (checkoutBtn) {
-            checkoutBtn.addEventListener("click", (e) => {
+        if (checkoutBtn) checkoutBtn.addEventListener("click", (e) => { e.preventDefault(); showCheckout(); });
+    }
+
+    function showCheckout() {
+        if (cartItems.length === 0) {
+            alert("Košík je prázdny. Najprv pridajte produkty.");
+            return;
+        }
+        const cartSide = document.getElementById("cartSidebar");
+        if (cartSide.style.width === "400px") cartSide.style.width = "0";
+        document.getElementById("mainProductSection").classList.add("hidden-section");
+        const checkoutPanel = document.getElementById("checkoutPanel");
+        checkoutPanel.classList.remove("hidden-section");
+        renderCheckoutContent();
+    }
+
+    function hideCheckout() {
+        document.getElementById("mainProductSection").classList.remove("hidden-section");
+        document.getElementById("checkoutPanel").classList.add("hidden-section");
+        renderCartSidebar();
+    }
+
+    function renderCheckoutContent() {
+        const container = document.getElementById("checkoutDynamicContent");
+        if (!container) return;
+        if (cartItems.length === 0) {
+            container.innerHTML = `<div class="empty-cart-message">Košík je prázdny, nemožno dokončiť objednávku.<br><button class="back-to-shop" id="forceBackBtn">Späť na nákup</button></div>`;
+            const backBtn = document.getElementById("forceBackBtn");
+            if (backBtn) backBtn.addEventListener("click", () => hideCheckout());
+            return;
+        }
+        let itemsHtml = `<div class="checkout-grid"><div class="checkout-items"><div class="section-title">Produkty v objednávke</div>`;
+        let celkovaSuma = 0;
+        for (let item of cartItems) {
+            const prod = getProductById(item.id);
+            if (!prod) continue;
+            const subtotal = prod.price * item.quantity;
+            celkovaSuma += subtotal;
+            itemsHtml += `
+                <div class="checkout-product-item">
+                    <img class="checkout-product-img" src="${prod.image}" alt="${prod.name}">
+                    <div class="checkout-product-details">
+                        <div class="checkout-product-title">${prod.name}</div>
+                        <div class="checkout-product-qty-price">Množstvo: ${item.quantity} × ${prod.price.toFixed(2)} €</div>
+                        <div style="font-weight:500;">Spolu: ${subtotal.toFixed(2)} €</div>
+                    </div>
+                </div>
+            `;
+        }
+        itemsHtml += `<div class="checkout-total">Celková suma: ${celkovaSuma.toFixed(2)} €</div></div>`;
+        itemsHtml += `
+            <div class="checkout-form">
+                <div class="section-title">Platobné a doručovacie údaje</div>
+                <form id="paymentForm">
+                    <div class="form-group"><label>Email *</label><input type="email" id="emailInput" placeholder="vas@email.sk" required></div>
+                    <div class="form-group"><label>Meno a priezvisko *</label><input type="text" id="fullnameInput" placeholder="Jana Nováková" required></div>
+                    <div class="form-group"><label>Adresa (ulica, mesto, PSČ) *</label><input type="text" id="addressInput" placeholder="Hlavná 12, 81101 Bratislava" required></div>
+                    <div class="form-group"><label>Názov na karte *</label><input type="text" id="cardName" placeholder="JANA NOVÁKOVÁ" required></div>
+                    <div class="form-group"><label>Číslo karty *</label><input type="text" id="cardNumber" placeholder="4242 4242 4242 4242" maxlength="19" required></div>
+                    <div class="card-row">
+                        <div class="form-group"><label>Dátum expirácie *</label><input type="text" id="cardExpiry" placeholder="MM/YY" required></div>
+                        <div class="form-group"><label>CVV *</label><input type="text" id="cardCvv" placeholder="123" maxlength="4" required></div>
+                    </div>
+                    <button type="submit" class="payment-btn">Zaplatiť ${celkovaSuma.toFixed(2)} €</button>
+                </form>
+            </div>
+        </div>`;
+        container.innerHTML = itemsHtml;
+        const form = document.getElementById("paymentForm");
+        if (form) {
+            form.addEventListener("submit", (e) => {
                 e.preventDefault();
-                alert(`Ďakujeme za nákup! Celková suma: ${totalPrice.toFixed(2)} €. Toto je ukážková implementácia.`);
+                const email = document.getElementById("emailInput")?.value.trim();
+                const name = document.getElementById("fullnameInput")?.value.trim();
+                const address = document.getElementById("addressInput")?.value.trim();
+                const cardOwner = document.getElementById("cardName")?.value.trim();
+                const cardNum = document.getElementById("cardNumber")?.value.trim().replace(/\s/g, '');
+                const expiry = document.getElementById("cardExpiry")?.value.trim();
+                const cvv = document.getElementById("cardCvv")?.value.trim();
+                if (!email || !name || !address || !cardOwner || !cardNum || !expiry || !cvv) {
+                    alert("Prosím, vyplňte všetky povinné polia.");
+                    return;
+                }
+                if (!email.includes("@")) { alert("Zadajte platný email."); return; }
+                if (cardNum.length < 13) { alert("Číslo karty je neplatné (minimálne 13 číslic)."); return; }
+                if (!expiry.match(/^\d{2}\/\d{2}$/)) { alert("Formát expirácie MM/YY"); return; }
+                if (cvv.length < 3) { alert("CVV musí mať 3-4 číslice"); return; }
+                alert(`Platba prebehla úspešne! \n\nSuma: ${celkovaSuma.toFixed(2)} €\nDoručenie na: ${address}\nEmail: ${email}\nĎakujeme za nákup, ${name}.`);
+                cartItems = [];
+                saveCart();
+                updateCartBadge();
+                renderCartSidebar();
+                hideCheckout();
+                alert("Váš košík bol vyprázdnený. Pokračujte v nákupe.");
             });
+        }
+        const backBtn = document.getElementById("backToShoppingBtn");
+        if (backBtn) {
+            const newBack = backBtn.cloneNode(true);
+            backBtn.parentNode.replaceChild(newBack, backBtn);
+            newBack.addEventListener("click", () => hideCheckout());
+        } else {
+            const maybeBack = document.querySelector("#checkoutPanel .back-to-shop");
+            if(maybeBack) maybeBack.addEventListener("click", () => hideCheckout());
         }
     }
 
@@ -751,22 +875,17 @@
     const modalPrice = document.getElementById("modalPrice");
     const modalDesc = document.getElementById("modalDesc");
     const closeModalBtn = document.getElementById("closeModalBtn");
-
     function showProductDetail(productId) {
         const product = getProductById(productId);
         if (!product) return;
         modalImg.src = product.image;
-        modalImg.alt = product.name;
         modalBrand.innerText = product.brand.toUpperCase();
         modalTitle.innerText = product.name;
         modalPrice.innerText = `${product.price.toFixed(2)} €`;
         modalDesc.innerText = product.description;
         modal.classList.add("active");
     }
-
-    function closeModal() {
-        modal.classList.remove("active");
-    }
+    function closeModal() { modal.classList.remove("active"); }
 
     function renderProducts() {
         const grid = document.getElementById("productGridContainer");
@@ -777,9 +896,7 @@
             card.className = "product-card";
             card.setAttribute("data-id", prod.id);
             card.innerHTML = `
-                <div class="product-image-container">
-                    <img src="${prod.image}" alt="${prod.name}">
-                </div>
+                <div class="product-image-container"><img src="${prod.image}" alt="${prod.name}"></div>
                 <div class="brand-name">${prod.brand}</div>
                 <div class="product-title">${prod.name}</div>
                 <div class="new-price">${prod.price.toFixed(2)} €</div>
@@ -790,70 +907,50 @@
             `;
             grid.appendChild(card);
         });
-
         document.querySelectorAll(".btn-detail").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                const id = parseInt(btn.getAttribute("data-id"));
-                showProductDetail(id);
-            });
+            btn.addEventListener("click", (e) => { const id = parseInt(btn.getAttribute("data-id")); showProductDetail(id); });
         });
         document.querySelectorAll(".btn-cart").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                const id = parseInt(btn.getAttribute("data-id"));
-                addToCart(id);
-                const cartSide = document.getElementById("cartSidebar");
-                if (cartSide.style.width !== "400px") {
-                } else {
-                    renderCartSidebar();
-                }
-            });
+            btn.addEventListener("click", (e) => { const id = parseInt(btn.getAttribute("data-id")); addToCart(id); });
         });
     }
-
-    function filterProducts(searchTerm) {
-        const term = searchTerm.toLowerCase().trim();
+    function filterProducts(term) {
+        const searchTerm = term.toLowerCase().trim();
         const cards = document.querySelectorAll(".product-card");
         productsData.forEach((prod, idx) => {
             const card = cards[idx];
             if (!card) return;
-            const match = prod.name.toLowerCase().includes(term) || prod.brand.toLowerCase().includes(term);
+            const match = prod.name.toLowerCase().includes(searchTerm) || prod.brand.toLowerCase().includes(searchTerm);
             card.style.display = match ? "block" : "none";
         });
     }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        loadCart();
-        renderProducts();
-        updateCartBadge();
-        renderCartSidebar();
-
-        const searchInput = document.getElementById("searchInput");
-        if (searchInput) {
-            searchInput.addEventListener("input", (e) => {
-                filterProducts(e.target.value);
-            });
-        }
-
-        closeModalBtn.addEventListener("click", closeModal);
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) closeModal();
-        });
-    });
+    
 
     function openNav() { document.getElementById("mySidenav").style.width = "300px"; }
     function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
     function toggleCart() {
         const cart = document.getElementById("cartSidebar");
-        cart.style.width = (cart.style.width === "400px") ? "0" : "400px";
-        if (cart.style.width === "400px") renderCartSidebar(); 
+        const isOpen = cart.style.width === "400px";
+        cart.style.width = isOpen ? "0" : "400px";
+        if (!isOpen) renderCartSidebar();
     }
     window.addEventListener('click', function(e) {
         const sidenav = document.getElementById("mySidenav");
         const cart = document.getElementById("cartSidebar");
-        const hamburgerBtn = document.querySelector('.hamburger');
+        const hamburger = document.querySelector('.hamburger');
         const cartTrigger = document.querySelector('.cart-trigger');
-        if (sidenav.style.width === "300px" && !sidenav.contains(e.target) && !hamburgerBtn?.contains(e.target)) closeNav();
+        if (sidenav.style.width === "300px" && !sidenav.contains(e.target) && !hamburger?.contains(e.target)) closeNav();
         if (cart.style.width === "400px" && !cart.contains(e.target) && !cartTrigger?.contains(e.target)) cart.style.width = "0";
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+        loadCart();
+        renderProducts();
+        updateCartBadge();
+        renderCartSidebar();
+        const searchInput = document.getElementById("searchInput");
+        if (searchInput) searchInput.addEventListener("input", (e) => filterProducts(e.target.value));
+        closeModalBtn.addEventListener("click", closeModal);
+        modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
     });
 </script>
 </body>
